@@ -3,12 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEW どきどき 일본어 초급 上 - 단어장</title>
+<meta name="description" content="どきどき 일본어 초급 上 기말고사 범위(8~13과) 단어를 랜덤 플래시카드로 학습하는 무료 일본어 단어장입니다. 한자·가나·한글을 선택해 반복 연습하세요.">
+<title>どきどき 일본어 초급 上 기말고사 단어장 (8~13과) - 일본어 단어장</title>
 <style>
 :root{--bg:#f5f7fa;--card:#ffffff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;--accent:#4f46e5;--accent2:#eef2ff;--ok:#10b981;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Hiragino Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:24px;}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Hiragino Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
+.site-nav{background:var(--card);border-bottom:1px solid var(--line);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-weight:800;font-size:16px;color:var(--accent);text-decoration:none;}
+.nav-links{display:flex;gap:20px;}
+.nav-links a{font-size:13px;color:var(--sub);text-decoration:none;transition:.15s;}
+.nav-links a:hover{color:var(--accent);}
+main{flex:1;display:flex;justify-content:center;padding:24px;}
 .wrap{width:100%;max-width:560px;}
+.site-footer{background:var(--card);border-top:1px solid var(--line);padding:20px 24px;text-align:center;}
+.footer-links{display:flex;gap:20px;justify-content:center;margin-bottom:8px;}
+.footer-links a{font-size:12px;color:var(--sub);text-decoration:none;transition:.15s;}
+.footer-links a:hover{color:var(--accent);}
+.footer-copy{font-size:11px;color:#9ca3af;}
 h1{font-size:22px;text-align:center;margin-bottom:4px;}
 .sub{text-align:center;color:var(--sub);font-size:13px;margin-bottom:24px;}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
@@ -45,10 +57,17 @@ h1{font-size:22px;text-align:center;margin-bottom:4px;}
 </style>
 </head>
 <body>
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">일본어 단어장</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="privacy.html">개인정보처리방침</a>
+  </div>
+</nav>
+<main>
 <div class="wrap">
-<a href="index.html" class="back-link">← 단어장 목록</a>
-<h1>どきどき 일본어 초급 上</h1>
-<div class="sub">초급 8과 ~ 13과 · 랜덤 단어 연습</div>
+<h1>どきどき 일본어 초급 上 (기말고사)</h1>
+<div class="sub">8과 ~ 13과 · 랜덤 단어 연습</div>
 
 <div class="panel" id="menu">
   <div class="section">
@@ -164,5 +183,15 @@ function render(){
 $('#nextBtn').addEventListener('click',()=>{idx++;render();});
 $('#homeBtn').addEventListener('click',()=>{$('#quiz').style.display='none';$('#menu').style.display='block';});
 </script>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="about.html">소개</a>
+    <a href="privacy.html">개인정보처리방침</a>
+  </div>
+  <div class="footer-copy">© 2025 일본어 단어장. 학습 목적의 비상업적 사이트입니다.</div>
+</footer>
 </body>
 </html>

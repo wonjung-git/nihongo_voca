@@ -3,15 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>일본어 단어장</title>
+<meta name="description" content="도키도키 일본어 초급 교재의 단어를 과별로 선택해 랜덤 플래시카드로 학습하는 무료 일본어 단어장입니다. 한자·가나·한글을 원하는 순서로 연습할 수 있습니다.">
+<title>일본어 단어장 - 도키도키 교재 플래시카드 학습</title>
 <style>
 :root{--bg:#f5f7fa;--card:#ffffff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;--accent:#4f46e5;--accent2:#eef2ff;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Hiragino Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:32px 24px;}
-.wrap{width:100%;max-width:640px;}
-header{text-align:center;margin-bottom:36px;}
-header h1{font-size:26px;font-weight:800;margin-bottom:6px;}
-header p{color:var(--sub);font-size:14px;}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Hiragino Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
+
+/* Nav */
+.site-nav{background:var(--card);border-bottom:1px solid var(--line);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-weight:800;font-size:16px;color:var(--accent);text-decoration:none;}
+.nav-links{display:flex;gap:20px;}
+.nav-links a{font-size:13px;color:var(--sub);text-decoration:none;transition:.15s;}
+.nav-links a:hover{color:var(--accent);}
+
+/* Main */
+main{flex:1;display:flex;justify-content:center;padding:40px 24px;}
+.wrap{width:100%;max-width:680px;}
+
+/* Hero */
+.hero{text-align:center;margin-bottom:48px;}
+.hero h1{font-size:28px;font-weight:800;margin-bottom:10px;}
+.hero p{color:var(--sub);font-size:15px;line-height:1.7;max-width:480px;margin:0 auto;}
+
+/* Section */
+.section-title{font-size:17px;font-weight:700;margin-bottom:16px;color:var(--ink);}
+
+/* Book cards */
+.book-section{margin-bottom:48px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
 .book-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,.06);cursor:pointer;text-decoration:none;color:inherit;display:block;transition:.18s;}
 .book-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(79,70,229,.12);transform:translateY(-2px);}
@@ -19,28 +38,103 @@ header p{color:var(--sub);font-size:14px;}
 .book-title{font-size:16px;font-weight:700;line-height:1.4;margin-bottom:6px;}
 .book-sub{font-size:13px;color:var(--sub);line-height:1.5;}
 .book-badge{display:inline-block;margin-top:12px;padding:4px 10px;background:var(--accent2);color:var(--accent);border-radius:6px;font-size:12px;font-weight:600;}
+
+/* Guide */
+.guide-section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:48px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.steps{display:flex;flex-direction:column;gap:14px;margin-top:4px;}
+.step{display:flex;gap:14px;align-items:flex-start;}
+.step-num{width:28px;height:28px;min-width:28px;background:var(--accent2);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+.step-text{font-size:14px;color:var(--ink);line-height:1.6;padding-top:4px;}
+.step-text strong{color:var(--accent);}
+
+/* About section */
+.about-section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:48px;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.about-section p{font-size:14px;color:var(--sub);line-height:1.8;margin-bottom:10px;}
+.about-section p:last-child{margin-bottom:0;}
+
+/* Footer */
+.site-footer{background:var(--card);border-top:1px solid var(--line);padding:20px 24px;text-align:center;}
+.footer-links{display:flex;gap:20px;justify-content:center;margin-bottom:8px;}
+.footer-links a{font-size:12px;color:var(--sub);text-decoration:none;transition:.15s;}
+.footer-links a:hover{color:var(--accent);}
+.footer-copy{font-size:11px;color:#9ca3af;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>일본어 단어장</h1>
-    <p>학습할 단어장을 선택하세요</p>
-  </header>
-  <div class="grid">
-    <a href="dokidoki_mid.html" class="book-card">
-      <div class="book-icon">📖</div>
-      <div class="book-title">NEW どきどき(도키도키)<br>일본어 초급 上 (중간고사)</div>
-      <div class="book-sub">3과 ~ 7과 · 랜덤 단어 연습</div>
-      <span class="book-badge">초급</span>
-    </a>
-    <a href="dokidoki.html" class="book-card">
-      <div class="book-icon">📖</div>
-      <div class="book-title">NEW どきどき(도키도키)<br>일본어 초급 上 (기말고사)</div>
-      <div class="book-sub">8과 ~ 13과 · 랜덤 단어 연습</div>
-      <span class="book-badge">초급</span>
-    </a>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">일본어 단어장</a>
+  <div class="nav-links">
+    <a href="about.html">소개</a>
+    <a href="privacy.html">개인정보처리방침</a>
   </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+  <section class="hero">
+    <h1>일본어 단어장</h1>
+    <p>도키도키 일본어 초급 교재의 단어를 과별로 선택하고<br>랜덤 플래시카드로 효율적으로 학습하세요.</p>
+  </section>
+
+  <section class="book-section">
+    <div class="section-title">단어장 선택</div>
+    <div class="grid">
+      <a href="dokidoki_mid.html" class="book-card">
+        <div class="book-icon">📖</div>
+        <div class="book-title">NEW どきどき(도키도키)<br>일본어 초급 上 (중간고사)</div>
+        <div class="book-sub">3과 ~ 7과 · 312단어 · 랜덤 연습</div>
+        <span class="book-badge">초급</span>
+      </a>
+      <a href="dokidoki.html" class="book-card">
+        <div class="book-icon">📖</div>
+        <div class="book-title">NEW どきどき(도키도키)<br>일본어 초급 上 (기말고사)</div>
+        <div class="book-sub">8과 ~ 13과 · 랜덤 단어 연습</div>
+        <span class="book-badge">초급</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="guide-section">
+    <div class="section-title">이용 방법</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">위에서 <strong>학습할 단어장</strong>을 선택합니다. 중간고사(3~7과) 또는 기말고사(8~13과) 범위를 고를 수 있습니다.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">단어장 안에서 <strong>학습할 과(단원)</strong>를 체크박스로 선택합니다. 여러 과를 동시에 선택해 합쳐서 연습할 수 있습니다.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>처음 보여줄 항목</strong>(한자·가나·한글 중 하나)을 선택하고 시작하기를 누릅니다.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">카드에서 버튼을 눌러 <strong>나머지 항목을 확인</strong>하고, 다음 단어로 넘어가면서 반복 학습합니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="section-title">사이트 소개</div>
+    <p>이 사이트는 일본어를 처음 배우는 학습자를 위한 무료 단어 플래시카드 서비스입니다. <strong>NEW どきどき(도키도키) 일본어 초급 上</strong> 교재를 기준으로 단어를 수록하였으며, 시험 범위별로 나누어 효율적으로 학습할 수 있도록 구성했습니다.</p>
+    <p>단어마다 <strong>한자 표기, 히라가나/가타카나 읽기, 한국어 뜻</strong>을 함께 제공하며, 원하는 항목을 먼저 보여주고 나머지를 하나씩 확인하는 플래시카드 방식으로 기억에 오래 남는 학습이 가능합니다.</p>
+    <p>모바일·PC 어느 환경에서도 편리하게 이용할 수 있으며, 앞으로 더 많은 교재와 단원을 추가할 예정입니다.</p>
+  </section>
+
 </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="about.html">소개</a>
+    <a href="privacy.html">개인정보처리방침</a>
+  </div>
+  <div class="footer-copy">© 2025 일본어 단어장. 학습 목적의 비상업적 사이트입니다.</div>
+</footer>
+
 </body>
 </html>
