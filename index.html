@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>도키도키 일본어 단어장 (8~13과)</title>
+<style>
+:root{--bg:#f5f7fa;--card:#ffffff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;--accent:#4f46e5;--accent2:#eef2ff;--ok:#10b981;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic','Hiragino Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:24px;}
+.wrap{width:100%;max-width:560px;}
+h1{font-size:22px;text-align:center;margin-bottom:4px;}
+.sub{text-align:center;color:var(--sub);font-size:13px;margin-bottom:24px;}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.05);}
+.section{margin-bottom:22px;}
+.label{font-size:14px;font-weight:700;margin-bottom:12px;color:var(--ink);}
+.chips{display:flex;flex-wrap:wrap;gap:10px;}
+.chip{display:flex;align-items:center;gap:7px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14px;user-select:none;transition:.15s;background:#fff;}
+.chip:hover{border-color:var(--accent);}
+.chip.on{background:var(--accent2);border-color:var(--accent);color:var(--accent);font-weight:600;}
+.chip input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer;}
+.start{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px;transition:.15s;}
+.start:hover{background:#4338ca;}
+.err{color:#dc2626;font-size:13px;text-align:center;margin-top:10px;min-height:16px;}
+.quiz{display:none;}
+.counter{text-align:center;color:var(--sub);font-size:13px;margin-bottom:12px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px 20px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:18px;min-height:230px;display:flex;flex-direction:column;justify-content:center;gap:16px;}
+.field{display:none;}
+.field.show{display:block;}
+.field .ftag{font-size:11px;color:var(--sub);letter-spacing:1px;margin-bottom:4px;text-transform:uppercase;}
+.kanji{font-size:46px;font-weight:700;}
+.kana{font-size:34px;color:var(--accent);}
+.kor{font-size:26px;}
+.reveal-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+.rbtn{padding:10px 16px;border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s;}
+.rbtn:hover{background:var(--accent2);}
+.rbtn.active{background:var(--accent);color:#fff;}
+.nav{display:flex;gap:10px;}
+.next{flex:1;padding:14px;background:var(--ok);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;}
+.next:hover{background:#059669;}
+.home{padding:14px 18px;background:#fff;color:var(--sub);border:1px solid var(--line);border-radius:12px;font-size:15px;cursor:pointer;}
+.home:hover{border-color:var(--accent);color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>도키도키 일본어 단어장</h1>
+<div class="sub">초급 8과 ~ 13과 · 랜덤 단어 연습</div>
+
+<div class="panel" id="menu">
+  <div class="section">
+    <div class="label">1. 과 선택</div>
+    <div class="chips" id="lessons">
+      <label class="chip"><input type="checkbox" value="all" id="allBox">전체</label>
+      <label class="chip"><input type="checkbox" value="8">8과</label>
+      <label class="chip"><input type="checkbox" value="9">9과</label>
+      <label class="chip"><input type="checkbox" value="10">10과</label>
+      <label class="chip"><input type="checkbox" value="11">11과</label>
+      <label class="chip"><input type="checkbox" value="12">12과</label>
+      <label class="chip"><input type="checkbox" value="13">13과</label>
+    </div>
+  </div>
+  <div class="section">
+    <div class="label">2. 처음 보여줄 항목 (하나만 선택)</div>
+    <div class="chips" id="modes">
+      <label class="chip on"><input type="radio" name="mode" value="kanji" checked>한자 <span style="color:var(--sub);font-size:11px">(없으면 가나)</span></label>
+      <label class="chip"><input type="radio" name="mode" value="kana">가나</label>
+      <label class="chip"><input type="radio" name="mode" value="kor">한글</label>
+    </div>
+  </div>
+  <button class="start" id="startBtn">시작하기</button>
+  <div class="err" id="err"></div>
+</div>
+
+<div class="quiz" id="quiz">
+  <div class="counter" id="counter"></div>
+  <div class="card" id="card">
+    <div class="field" data-f="kanji"><div class="ftag">한자</div><div class="kanji" id="v-kanji"></div></div>
+    <div class="field" data-f="kana"><div class="ftag">가나</div><div class="kana" id="v-kana"></div></div>
+    <div class="field" data-f="kor"><div class="ftag">한글</div><div class="kor" id="v-kor"></div></div>
+  </div>
+  <div class="reveal-btns" id="revealBtns">
+    <button class="rbtn" data-f="kanji">한자 보기</button>
+    <button class="rbtn" data-f="kana">가나 보기</button>
+    <button class="rbtn" data-f="kor">한글 보기</button>
+  </div>
+  <div class="nav">
+    <button class="home" id="homeBtn">메인으로</button>
+    <button class="next" id="nextBtn">다음 단어 →</button>
+  </div>
+</div>
+</div>
+
+<script>
+const DATA = {"8": [{"kanji": "母", "kana": "はは", "kor": "(나의) 어머니"}, {"kanji": "今日", "kana": "きょう", "kor": "오늘"}, {"kanji": "-", "kana": "たんじょうび", "kor": "생일"}, {"kanji": "ご両親", "kana": "ごりょうしん", "kor": "부모님"}, {"kanji": "大阪", "kana": "おおさか", "kor": "오사카"}, {"kanji": "-", "kana": "います", "kor": "있습니다(사람, 동물)"}, {"kanji": "何人", "kana": "なんにん", "kor": "몇 명"}, {"kanji": "兄弟", "kana": "きょうだい", "kor": "형제"}, {"kanji": "一人っ子", "kana": "-", "kor": "외동"}, {"kanji": "家族", "kana": "かぞく", "kor": "가족"}, {"kanji": "ご人", "kana": "-", "kor": "5명"}, {"kanji": "父", "kana": "ちち", "kor": "(나의) 아버지"}, {"kanji": "妹", "kana": "いもうと", "kor": "(나의) 여동생"}, {"kanji": "弟", "kana": "おとうと", "kor": "(나의) 남동생"}, {"kanji": "長男", "kana": "ちょうなん", "kor": "장남"}, {"kanji": "妹さん", "kana": "いもうとさん", "kor": "(남의) 여동생"}, {"kanji": "-", "kana": "おいくつ", "kor": "몇 살"}, {"kanji": "今年", "kana": "ことし", "kor": "올해"}, {"kanji": "18歳", "kana": "じゅうはっさい", "kor": "18살"}, {"kanji": "〜歳", "kana": "〜さい", "kor": "~살, ~세(나이)"}, {"kanji": "-", "kana": "〜で", "kor": "~이고"}, {"kanji": "-", "kana": "アメリカ", "kor": "미국"}, {"kanji": "弟さん", "kana": "おとうとさん", "kor": "(남의) 남동생"}, {"kanji": "-", "kana": "いますか", "kor": "있습니까? (사람, 동물)"}, {"kanji": "高校", "kana": "こうこう", "kor": "고등학교"}, {"kanji": "-", "kana": "いません", "kor": "없습니다"}, {"kanji": "-", "kana": "あります", "kor": "있습니다"}, {"kanji": "-", "kana": "ありません", "kor": "없습니다"}, {"kanji": "お父さん", "kana": "おとうさん", "kor": "(남의) 아버지"}, {"kanji": "母", "kana": "はは", "kor": "(나의) 어머니"}, {"kanji": "お母さん", "kana": "おかあさん", "kor": "(남의) 어머니"}, {"kanji": "兄", "kana": "あに", "kor": "(나의) 형, 오빠"}, {"kanji": "お兄さん", "kana": "おにいさん", "kor": "(남의) 형, 오빠"}, {"kanji": "姉", "kana": "あね", "kor": "(나의) 누나, 언니"}, {"kanji": "お姉さん", "kana": "おねえさん", "kor": "(남의) 누나, 언니"}, {"kanji": "妹さん", "kana": "いもうとさん", "kor": "(남의) 여동생"}, {"kanji": "祖父", "kana": "そふ", "kor": "(나의) 할아버지"}, {"kanji": "-", "kana": "おじいさん", "kor": "(남의) 할아버지"}, {"kanji": "祖母", "kana": "そぼ", "kor": "(남의) 할머니"}, {"kanji": "-", "kana": "おじ", "kor": "아저씨(숙부 등)"}, {"kanji": "-", "kana": "おば", "kor": "아주머니(숙모 등)"}, {"kanji": "-", "kana": "おじさん", "kor": "(남의) 아저씨"}, {"kanji": "-", "kana": "おばさん", "kor": "(남의) 아주머니"}, {"kanji": "-", "kana": "ひとり", "kor": "1명"}, {"kanji": "-", "kana": "ふたり", "kor": "2명"}, {"kanji": "-", "kana": "さんにん", "kor": "3명"}, {"kanji": "-", "kana": "よにん", "kor": "4명"}, {"kanji": "-", "kana": "ごにん", "kor": "5명"}, {"kanji": "-", "kana": "ろくにん", "kor": "6명"}, {"kanji": "-", "kana": "しちにん / ななにん", "kor": "7명"}, {"kanji": "-", "kana": "はちにん", "kor": "8명"}, {"kanji": "-", "kana": "きゅうにん / くにん", "kor": "9명"}, {"kanji": "-", "kana": "じゅうにん", "kor": "10명"}, {"kanji": "-", "kana": "じゅういちにん", "kor": "11명"}, {"kanji": "-", "kana": "じゅうににん", "kor": "12명"}, {"kanji": "-", "kana": "なんにん", "kor": "몇명"}, {"kanji": "一歳 / 一つ", "kana": "いっさい / ひとつ", "kor": "1살"}, {"kanji": "2歳 / 二つ", "kana": "にさい / ふたつ", "kor": "2살"}, {"kanji": "３歳 / 三つ", "kana": "さんさい / みっつ", "kor": "3살"}, {"kanji": "４歳 / 四つ", "kana": "よんさい / よっつ", "kor": "4살"}, {"kanji": "５歳 / 五つ", "kana": "ごさい / いつつ", "kor": "5살"}, {"kanji": "６歳 / 六つ", "kana": "ろくさい / むっつ", "kor": "6살"}, {"kanji": "７歳 / 七つ", "kana": "ななさい / ななつ", "kor": "7살"}, {"kanji": "８歳 / 八つ", "kana": "はっさい / やっつ", "kor": "8살"}, {"kanji": "９歳 / ９つ", "kana": "きゅうさい / ここのつ", "kor": "9살"}, {"kanji": "１０歳", "kana": "じゅっさい", "kor": "10살"}, {"kanji": "１１歳", "kana": "じゅういっさい", "kor": "11살"}, {"kanji": "２０歳", "kana": "はたち", "kor": "20살"}, {"kanji": "何歳", "kana": "なんさい", "kor": "몇 살"}, {"kanji": "１匹", "kana": "いっぴき", "kor": "1마리"}, {"kanji": "２匹", "kana": "にひき", "kor": "2마리"}, {"kanji": "３匹", "kana": "さんびき", "kor": "3마리"}, {"kanji": "４匹", "kana": "よんひき", "kor": "4마리"}, {"kanji": "５匹", "kana": "ごひき", "kor": "5마리"}, {"kanji": "６匹", "kana": "ろっぴき", "kor": "6마리"}, {"kanji": "７匹", "kana": "ななひき", "kor": "7마리"}, {"kanji": "８匹", "kana": "はっぴき / はちひき", "kor": "8마리"}, {"kanji": "９匹", "kana": "きゅうひき", "kor": "9마리"}, {"kanji": "１０匹", "kana": "じゅっぴき / じっぴき", "kor": "10마리"}, {"kanji": "１１匹", "kana": "じゅういっぴき", "kor": "11마리"}, {"kanji": "１２匹", "kana": "じゅうにひき", "kor": "12마리"}, {"kanji": "何匹", "kana": "なんびき", "kor": "몇 마리"}, {"kanji": "犬", "kana": "いぬ", "kor": "개"}, {"kanji": "-", "kana": "クラス", "kor": "반, 클래스"}, {"kanji": "-", "kana": "だれも", "kor": "아무도"}, {"kanji": "男の人", "kana": "おとこのひと", "kor": "남자"}, {"kanji": "女の人", "kana": "おんなのひと", "kor": "여자"}, {"kanji": "-", "kana": "〜ウォン", "kor": "~원"}, {"kanji": "学生たち", "kana": "がくせいたち", "kor": "학생들"}, {"kanji": "-", "kana": "〜たち", "kor": "~들"}, {"kanji": "-", "kana": "ソファー", "kor": "소파"}, {"kanji": "主婦", "kana": "しゅふ", "kor": "주부"}, {"kanji": "子供", "kana": "こども", "kor": "아이, 어린이"}, {"kanji": "子供たち", "kana": "こどもたち", "kor": "어린이들"}, {"kanji": "〜くらい", "kana": "ぐらい", "kor": "~정도, ~쯤"}, {"kanji": "一昨日", "kana": "おととい", "kor": "그저께"}, {"kanji": "昨日", "kana": "きのう", "kor": "어제"}, {"kanji": "今日", "kana": "きょう", "kor": "오늘"}, {"kanji": "明日", "kana": "あした / あす", "kor": "내일"}, {"kanji": "明後日", "kana": "あさって", "kor": "모레"}], "9": [{"kanji": "-", "kana": "ラーメン", "kor": "라면"}, {"kanji": "-", "kana": "はじめて", "kor": "처음"}, {"kanji": "味", "kana": "あじ", "kor": "맛"}, {"kanji": "-", "kana": "おいしい", "kor": "맛있다"}, {"kanji": "-", "kana": "〜が", "kor": "~이지만, ~인데"}, {"kanji": "少し", "kana": "すこし", "kor": "조금"}, {"kanji": "塩辛い", "kana": "しおからい", "kor": "짜다"}, {"kanji": "辛い", "kana": "からい", "kor": "맵다"}, {"kanji": "-", "kana": "ちょっと", "kor": "좀, 약간"}, {"kanji": "高い", "kana": "たかい", "kor": "비싸다, 높다"}, {"kanji": "-", "kana": "あまり", "kor": "그다지"}, {"kanji": "-", "kana": "ほう", "kor": "쪽, 편"}, {"kanji": "-", "kana": "いい", "kor": "좋다"}, {"kanji": "夏", "kana": "なつ", "kor": "여름"}, {"kanji": "暑い", "kana": "あつい", "kor": "덥다"}, {"kanji": "頭", "kana": "あたま", "kor": "머리"}, {"kanji": "優しい", "kana": "やさしい", "kor": "상냥하다, 친절하다"}, {"kanji": "大きい", "kana": "おおきい", "kor": "크다"}, {"kanji": "広い", "kana": "ひろい", "kor": "넓다"}, {"kanji": "難しい", "kana": "むずかしい", "kor": "어렵다"}, {"kanji": "-", "kana": "マンガ", "kor": "만화"}, {"kanji": "面白い", "kana": "おもしろい", "kor": "재미있다"}, {"kanji": "店", "kana": "みせ", "kor": "가게"}, {"kanji": "時間", "kana": "じかん", "kor": "시간"}, {"kanji": "映画", "kana": "えいが", "kor": "영화"}, {"kanji": "-", "kana": "アニメ", "kor": "애니메이션, 만화영화"}, {"kanji": "-", "kana": "サッカー", "kor": "축구"}, {"kanji": "野球", "kana": "やきゅう", "kor": "야구"}, {"kanji": "楽しい", "kana": "たのしい", "kor": "즐겁다"}, {"kanji": "紅茶", "kana": "こうちゃ", "kor": "홍차"}, {"kanji": "-", "kana": "どちらも", "kor": "어느 쪽도"}, {"kanji": "毎日", "kana": "まいにち", "kor": "매일"}, {"kanji": "忙しい", "kana": "いそがしい", "kor": "바쁘다"}, {"kanji": "天気", "kana": "てんき", "kor": "날씨"}, {"kanji": "海", "kana": "うみ", "kor": "바다"}, {"kanji": "空", "kana": "そら", "kor": "하늘"}, {"kanji": "青い", "kana": "あおい", "kor": "파랗다"}, {"kanji": "大学生活", "kana": "だいがくせいかつ", "kor": "대학생활"}, {"kanji": "-", "kana": "あたらしい", "kor": "새롭다"}, {"kanji": "-", "kana": "テスト", "kor": "테스트, 시험"}, {"kanji": "易しい", "kana": "やさしい", "kor": "쉽다"}, {"kanji": "低い", "kana": "ひくい", "kor": "낮다"}, {"kanji": "東京", "kana": "とうきょう", "kor": "도쿄"}, {"kanji": "甘い", "kana": "あまい", "kor": "달다"}, {"kanji": "安い", "kana": "やすい", "kor": "싸다"}, {"kanji": "背が高い", "kana": "せがたかい", "kor": "키가 크다"}, {"kanji": "冬", "kana": "ふゆ", "kor": "겨울"}, {"kanji": "-", "kana": "ソウル", "kor": "서울"}, {"kanji": "寒い", "kana": "さむい", "kor": "춥다"}, {"kanji": "悪い", "kana": "わるい", "kor": "나쁘다"}, {"kanji": "-", "kana": "まずい", "kor": "맛없다"}, {"kanji": "遠い", "kana": "とおい", "kor": "멀다"}, {"kanji": "近い", "kana": "ちかい", "kor": "가깝다"}, {"kanji": "赤い", "kana": "あかい", "kor": "붉다"}, {"kanji": "新しい", "kana": "あたらしい", "kor": "새롭다"}, {"kanji": "古い", "kana": "ふるい", "kor": "낡다"}, {"kanji": "重い", "kana": "おもい", "kor": "무겁다"}, {"kanji": "軽い", "kana": "かるい", "kor": "가볍다"}, {"kanji": "小さい", "kana": "ちいさい", "kor": "작다"}, {"kanji": "長い", "kana": "ながい", "kor": "길다"}, {"kanji": "短い", "kana": "みじかい", "kor": "짧다"}, {"kanji": "多い", "kana": "おおい", "kor": "많다"}, {"kanji": "少ない", "kana": "すくない", "kor": "적다"}, {"kanji": "涼しい", "kana": "すずしい", "kor": "서늘하다"}, {"kanji": "暖かい", "kana": "あたたかい", "kor": "따뜻하다"}, {"kanji": "忙しい", "kana": "いそがしい", "kor": "바쁘다"}, {"kanji": "-", "kana": "かっこいい", "kor": "멋있다"}, {"kanji": "明るい", "kana": "あかるい", "kor": "밝다"}, {"kanji": "楽しい", "kana": "たのしい", "kor": "즐겁다"}, {"kanji": "美しい", "kana": "うつくしい", "kor": "아름답다"}, {"kanji": "白い", "kana": "しろい", "kor": "희다"}, {"kanji": "-", "kana": "かわいい", "kor": "귀엽다"}], "10": [{"kanji": "-", "kana": "にぎやかだ", "kor": "번화하다"}, {"kanji": "静かだ", "kana": "しずかだ", "kor": "조용하다"}, {"kanji": "好きだ", "kana": "すきだ", "kor": "좋아하다"}, {"kanji": "嫌いだ", "kana": "きらいだ", "kor": "싫어하다"}, {"kanji": "上手だ", "kana": "じょうずだ", "kor": "능숙하다"}, {"kanji": "下手だ", "kana": "へただ", "kor": "서투르다"}, {"kanji": "得意だ", "kana": "とくいだ", "kor": "잘하다, 자신 있다"}, {"kanji": "苦手だ", "kana": "にがてだ", "kor": "서투르다"}, {"kanji": "便利だ", "kana": "べんりだ", "kor": "편리하다"}, {"kanji": "不便だ", "kana": "ふべんだ", "kor": "불편하다"}, {"kanji": "派手だ", "kana": "はでだ", "kor": "화려하다"}, {"kanji": "地味だ", "kana": "じみだ", "kor": "수수하다, 검소하다"}, {"kanji": "親切だ", "kana": "しんせつだ", "kor": "친절하다"}, {"kanji": "不親切だ", "kana": "ふしんせつだ", "kor": "불친절하다"}, {"kanji": "大変だ", "kana": "たいへんだ", "kor": "힘들다, 큰일이다"}, {"kanji": "様々だ", "kana": "さまざまだ", "kor": "여러 가지이다"}, {"kanji": "有名だ", "kana": "ゆうめいだ", "kor": "유명하다"}, {"kanji": "綺麗だ", "kana": "きれいだ", "kor": "깨끗하다, 예쁘다"}, {"kanji": "元気だ", "kana": "げんきだ", "kor": "건강하다"}, {"kanji": "健康だ", "kana": "けんこうだ", "kor": "건강하다"}, {"kanji": "真面目だ", "kana": "まじめだ", "kor": "성실하다"}, {"kanji": "丈夫だ", "kana": "じょうぶだ", "kor": "튼튼하다"}, {"kanji": "素敵だ", "kana": "すてきだ", "kor": "멋지다"}, {"kanji": "立派だ", "kana": "りっぱだ", "kor": "훌륭하다"}, {"kanji": "-", "kana": "ハンサムだ", "kor": "잘생기다"}, {"kanji": "暇だ", "kana": "ひまだ", "kor": "한가하다"}, {"kanji": "新鮮だ", "kana": "しんせんだ", "kor": "신선하다"}, {"kanji": "簡単だ", "kana": "かんたんだ", "kor": "간단하다"}, {"kanji": "日曜日", "kana": "にちようび", "kor": "일요일"}, {"kanji": "月曜日", "kana": "げつようび", "kor": "월요일"}, {"kanji": "火曜日", "kana": "かようび", "kor": "화요일"}, {"kanji": "水曜日", "kana": "すいようび", "kor": "수요일"}, {"kanji": "木曜日", "kana": "もくようび", "kor": "목요일"}, {"kanji": "金曜日", "kana": "きんようび", "kor": "금요일"}, {"kanji": "土曜日", "kana": "どようび", "kor": "토요일"}, {"kanji": "何曜日", "kana": "なんようび", "kor": "무슨 요일"}, {"kanji": "-", "kana": "〜から〜まで", "kor": "~부터 ~까지"}, {"kanji": "学園祭", "kana": "がくえんさい", "kor": "대학 축제"}, {"kanji": "-", "kana": "あっちこっち", "kor": "여기저기"}, {"kanji": "-", "kana": "とても", "kor": "매우, 대단히"}, {"kanji": "お好み焼き", "kana": "おこのみやき", "kor": "오코노미야키"}, {"kanji": "たこ焼き", "kana": "たこやき", "kor": "타코야끼"}, {"kanji": "-", "kana": "おでん", "kor": "어묵"}, {"kanji": "物", "kana": "もの", "kor": "것, 물건"}, {"kanji": "-", "kana": "たくさん", "kor": "많이"}, {"kanji": "食べ物", "kana": "たべもの", "kor": "음식, 먹을거리"}, {"kanji": "-", "kana": "チジミ", "kor": "지짐이"}, {"kanji": "-", "kana": "トッポッキ", "kor": "떡볶이"}, {"kanji": "料理", "kana": "りょうり", "kor": "요리"}, {"kanji": "街", "kana": "まち", "kor": "거리"}, {"kanji": "彼", "kana": "かれ", "kor": "그(남자)"}, {"kanji": "-", "kana": "キロ", "kor": "킬로미터"}, {"kanji": "授業", "kana": "じゅぎょう", "kor": "수업"}, {"kanji": "中間テスト", "kana": "ちゅうかん", "kor": "중간고사"}, {"kanji": "-", "kana": "ジョンロ", "kor": "종로"}, {"kanji": "今週", "kana": "こんしゅう", "kor": "이번주"}, {"kanji": "会議", "kana": "かいぎ", "kor": "회의"}, {"kanji": "来週", "kana": "らいしゅう", "kor": "다음주"}, {"kanji": "約束", "kana": "やくそく", "kor": "약속"}, {"kanji": "-", "kana": "パーティー", "kor": "파티"}, {"kanji": "-", "kana": "デート", "kor": "데이트"}, {"kanji": "-", "kana": "〜で", "kor": "~이고"}, {"kanji": "色々だ", "kana": "いろいろだ", "kor": "여러 가지이다"}, {"kanji": "時", "kana": "とき", "kor": "때"}], "11": [{"kanji": "お邪魔します", "kana": "おじゃまします", "kor": "실례합니다"}, {"kanji": "-", "kana": "メロン", "kor": "메론"}, {"kanji": "家賃", "kana": "やちん", "kor": "집세"}, {"kanji": "-", "kana": "そして", "kor": "그리고"}, {"kanji": "駅", "kana": "えき", "kor": "역"}, {"kanji": "近い", "kana": "ちかい", "kor": "가깝다"}, {"kanji": "便利だ", "kana": "べんりだ", "kor": "편리하다"}, {"kanji": "女の子", "kana": "おんなのこ", "kor": "여자아이"}, {"kanji": "-", "kana": "かわいい", "kor": "귀엽다"}, {"kanji": "恋人", "kana": "こいびと", "kor": "애인, 연인"}, {"kanji": "-", "kana": "タレント", "kor": "탤런트"}, {"kanji": "彼女", "kana": "かのじょ", "kor": "그녀, 여자친구"}, {"kanji": "-", "kana": "タイプ", "kor": "타입"}, {"kanji": "女性", "kana": "じょせい", "kor": "여성"}, {"kanji": "明るい", "kana": "あかるい", "kor": "밝다"}, {"kanji": "-", "kana": "でも", "kor": "하지만"}, {"kanji": "周り", "kana": "まわり", "kor": "주위, 주변"}, {"kanji": "-", "kana": "モデル", "kor": "모델"}, {"kanji": "軽い", "kana": "かるい", "kor": "가볍다"}, {"kanji": "-", "kana": "かっこいい", "kor": "멋있다"}, {"kanji": "-", "kana": "いつも", "kor": "언제나, 늘, 항상"}, {"kanji": "-", "kana": "ない", "kor": "없다"}, {"kanji": "漢字", "kana": "かんじ", "kor": "한자"}, {"kanji": "多い", "kana": "おおい", "kor": "많다"}, {"kanji": "男性", "kana": "だんせい", "kor": "남성"}, {"kanji": "小さい", "kana": "ちいさい", "kor": "작다"}, {"kanji": "不便だ", "kana": "ふべんだ", "kor": "불편하다"}, {"kanji": "-", "kana": "いやだ", "kor": "싫다"}, {"kanji": "-", "kana": "だめだ", "kor": "안 된다"}, {"kanji": "嫌いだ", "kana": "きらいだ", "kor": "싫어하다"}], "12": [{"kanji": "早い", "kana": "はやい", "kor": "이르다, 빠르다"}, {"kanji": "毎朝", "kana": "まいあさ", "kor": "매일 아침"}, {"kanji": "何時", "kana": "なんじ", "kor": "몇시"}, {"kanji": "-", "kana": "〜に", "kor": "에"}, {"kanji": "起きる", "kana": "おきる", "kor": "일어나다"}, {"kanji": "-", "kana": "たいてい", "kor": "대개"}, {"kanji": "朝", "kana": "あさ", "kor": "아침"}, {"kanji": "〜時", "kana": "じ", "kor": "시"}, {"kanji": "-", "kana": "〜ころ", "kor": "~경, ~무렵"}, {"kanji": "-", "kana": "ずいぶん", "kor": "퍽, 상당히"}, {"kanji": "朝ごはん", "kana": "あさごはん", "kor": "아침밥"}, {"kanji": "食べる", "kana": "たべる", "kor": "먹다"}, {"kanji": "牛乳", "kana": "ぎゅうにゅう", "kor": "우유"}, {"kanji": "-", "kana": "パン", "kor": "빵"}, {"kanji": "半", "kana": "はん", "kor": "반, 30분"}, {"kanji": "その前", "kana": "まえ", "kor": "그 전"}, {"kanji": "勉強する", "kana": "べんきょうする", "kor": "공부하다"}, {"kanji": "-", "kana": "どのぐらい", "kor": "어느정도"}, {"kanji": "-", "kana": "かかる", "kor": "걸리다"}, {"kanji": "自転車", "kana": "じてんしゃ", "kor": "자전거"}, {"kanji": "-", "kana": "〜で", "kor": "(으)로(수단)"}, {"kanji": "夜", "kana": "よる", "kor": "밤"}, {"kanji": "怖い", "kana": "こわい", "kor": "무섭다"}, {"kanji": "-", "kana": "〜へ", "kor": "~에, ~으로"}, {"kanji": "帰る", "kana": "かえる", "kor": "돌아가다, 돌아오다"}, {"kanji": "寮", "kana": "りょう", "kor": "기숙사"}, {"kanji": "-", "kana": "うらやましい", "kor": "부럽다"}, {"kanji": "時々", "kana": "ときどき", "kor": "가끔, 때때로"}, {"kanji": "遅刻する", "kana": "ちこくする", "kor": "지각하다"}, {"kanji": "歌う", "kana": "うたう", "kor": "노래하다"}, {"kanji": "買う", "kana": "かう", "kor": "사다"}, {"kanji": "習う", "kana": "ならう", "kor": "배우다"}, {"kanji": "待つ", "kana": "まつ", "kor": "기다리다"}, {"kanji": "飲む", "kana": "のむ", "kor": "마시다"}, {"kanji": "遊ぶ", "kana": "あそぶ", "kor": "놀다"}, {"kanji": "死ね", "kana": "しね", "kor": "죽다"}, {"kanji": "行く", "kana": "いく", "kor": "가다"}, {"kanji": "泳ぐ", "kana": "およぐ", "kor": "헤엄치다"}, {"kanji": "話す", "kana": "はなす", "kor": "말하다"}, {"kanji": "見る", "kana": "みる", "kor": "보다"}, {"kanji": "寝る", "kana": "ねる", "kor": "자다"}, {"kanji": "来る", "kana": "くる", "kor": "오다"}, {"kanji": "-", "kana": "する", "kor": "하다"}, {"kanji": "一時", "kana": "いちじ", "kor": "1시"}, {"kanji": "２時", "kana": "にじ", "kor": "2시"}, {"kanji": "三時", "kana": "さんじ", "kor": "3시"}, {"kanji": "五時", "kana": "ごじ", "kor": "5시"}, {"kanji": "六時", "kana": "ろくじ", "kor": "6시"}, {"kanji": "七時", "kana": "しちじ", "kor": "7시"}, {"kanji": "八時", "kana": "はちじ", "kor": "8시"}, {"kanji": "九時", "kana": "くじ", "kor": "9시"}, {"kanji": "十時", "kana": "じゅうじ", "kor": "10시"}, {"kanji": "十一時", "kana": "じゅういちじ", "kor": "11시"}, {"kanji": "十二時", "kana": "じゅうにじ", "kor": "12시"}, {"kanji": "-", "kana": "バス", "kor": "버스"}, {"kanji": "-", "kana": "プサン", "kor": "부산"}, {"kanji": "今度", "kana": "こんど", "kor": "이번"}, {"kanji": "始まる", "kana": "はじまる", "kor": "시작되다"}, {"kanji": "2017年", "kana": "-", "kor": "2017년"}, {"kanji": "会う", "kana": "-", "kor": "만나다"}, {"kanji": "一人で", "kana": "ひとりで", "kor": "혼자서"}, {"kanji": "考える", "kana": "かんがえる", "kor": "생각하다"}, {"kanji": "-", "kana": "テレビ", "kor": "텔레비전"}, {"kanji": "手紙", "kana": "てがみ", "kor": "편지"}, {"kanji": "出る", "kana": "でる", "kor": "나가다"}, {"kanji": "午後", "kana": "ごご", "kor": "오후"}, {"kanji": "終わる", "kana": "おわる", "kor": "끝나다"}, {"kanji": "作る", "kana": "つくる", "kor": "만들다"}, {"kanji": "買い物", "kana": "かいもの", "kor": "쇼핑"}, {"kanji": "読む", "kana": "よむ", "kor": "읽다"}, {"kanji": "早く", "kana": "はやく", "kor": "일찍, 빨리"}, {"kanji": "会社", "kana": "かいしゃ", "kor": "회사"}, {"kanji": "京都", "kana": "きょうと", "kor": "교토"}, {"kanji": "新幹線", "kana": "しんかんせん", "kor": "신칸센"}, {"kanji": "〜時間", "kana": "〜じかん", "kor": "시간"}, {"kanji": "飛行機", "kana": "ひこうき", "kor": "비행기"}, {"kanji": "-", "kana": "デパート", "kor": "백화점"}, {"kanji": "何時間", "kana": "なんじかん", "kor": "몇 시간"}, {"kanji": "-", "kana": "なぜ", "kor": "왜, 어째서"}], "13": [{"kanji": "-", "kana": "レポート", "kor": "리포트, 보고서"}, {"kanji": "-", "kana": "もう", "kor": "이미, 벌써, 이제, 더, 또, 곧"}, {"kanji": "書く", "kana": "かく", "kor": "쓰다"}, {"kanji": "-", "kana": "まだ", "kor": "아직"}, {"kanji": "-", "kana": "あさって", "kor": "모레"}, {"kanji": "-", "kana": "がんばる", "kor": "분발하다, 열심히 하다"}, {"kanji": "-", "kana": "ところで", "kor": "그런데"}, {"kanji": "週末", "kana": "しゅうまつ", "kor": "주말"}, {"kanji": "一緒に", "kana": "いっしょに", "kor": "같이, 함께"}, {"kanji": "横浜", "kana": "よこはま", "kor": "요코하마(지명)"}, {"kanji": "-", "kana": "よい", "kor": "좋다"}, {"kanji": "中華街", "kana": "ちゅうかがい", "kor": "중화가, 차이나타운"}, {"kanji": "中華料理", "kana": "ちゅうかりょうり", "kor": "중화요리, 중국요리"}, {"kanji": "夜遅い", "kana": "よるおそい", "kor": "밤늦다"}, {"kanji": "夜景", "kana": "やけい", "kor": "야경"}, {"kanji": "回る", "kana": "まわる", "kor": "돌다"}, {"kanji": "小物", "kana": "こもの", "kor": "작은 장식물, 소품"}, {"kanji": "服", "kana": "ふく", "kor": "옷"}, {"kanji": "買う", "kana": "かう", "kor": "사다"}, {"kanji": "フランス語", "kana": "フランスご", "kor": "프랑스어"}, {"kanji": "習う", "kana": "ならう", "kor": "배우다"}, {"kanji": "お寿司", "kana": "おすし", "kor": "초밥"}, {"kanji": "遅い", "kana": "おそい", "kor": "늦다"}, {"kanji": "-", "kana": "ホテル", "kor": "호텔"}, {"kanji": "遠い", "kana": "とおい", "kor": "멀다"}, {"kanji": "前は", "kana": "まえは", "kor": "전에는, 이전에는"}, {"kanji": "昔", "kana": "むかし", "kor": "옛날, 예전"}, {"kanji": "歌", "kana": "うた", "kor": "노래"}, {"kanji": "歌う", "kana": "うたう", "kor": "노래하다"}, {"kanji": "お風呂に入る", "kana": "おふろにはいる", "kor": "목욕하다"}, {"kanji": "-", "kana": "よく", "kor": "자주, 잘"}, {"kanji": "-", "kana": "メール", "kor": "메일"}, {"kanji": "-", "kana": "くつ", "kor": "신, 신발, 구두"}, {"kanji": "先週", "kana": "せんしゅう", "kor": "지난주"}, {"kanji": "公園", "kana": "こうえん", "kor": "공원"}, {"kanji": "散歩", "kana": "さんぽ", "kor": "산책"}, {"kanji": "材料", "kana": "ざいりょう", "kor": "재료"}, {"kanji": "（お）誕生日", "kana": "（お）たんじょうび", "kor": "생일"}, {"kanji": "今月", "kana": "こんげつ", "kor": "이번 달"}, {"kanji": "来月", "kana": "らいげつ", "kor": "다음달"}, {"kanji": "卒業式", "kana": "そつぎょうしき", "kor": "졸업식"}, {"kanji": "入学式", "kana": "にゅうがくしき", "kor": "입학식"}, {"kanji": "後", "kana": "あと", "kor": "후, 나중"}, {"kanji": "-", "kana": "どこか", "kor": "어딘가"}, {"kanji": "最近", "kana": "さいきん", "kor": "최근, 요즘"}, {"kanji": "一番", "kana": "いちばん", "kor": "가장, 제일"}, {"kanji": "一生懸命", "kana": "いっしょうけんめい", "kor": "열심히"}]};
+const $=s=>document.querySelector(s);
+
+// chip visual sync (works for checkbox + radio)
+function syncChips(){
+  document.querySelectorAll('.chip').forEach(c=>{
+    const inp=c.querySelector('input');
+    c.classList.toggle('on', inp.checked);
+  });
+}
+document.querySelectorAll('.chip input').forEach(inp=>inp.addEventListener('change',syncChips));
+
+// 전체 logic
+const allBox=$('#allBox');
+const lessonBoxes=[...document.querySelectorAll('#lessons input')].filter(i=>i.value!=='all');
+allBox.addEventListener('change',()=>{
+  lessonBoxes.forEach(b=>b.checked=allBox.checked);
+  syncChips();
+});
+lessonBoxes.forEach(b=>b.addEventListener('change',()=>{
+  allBox.checked=lessonBoxes.every(x=>x.checked);
+  syncChips();
+}));
+
+let queue=[], idx=0, startForm='kanji', shownForms=new Set();
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+$('#startBtn').addEventListener('click',()=>{
+  const lessons=lessonBoxes.filter(b=>b.checked).map(b=>b.value);
+  startForm=document.querySelector('input[name=mode]:checked').value;
+  if(!lessons.length){$('#err').textContent='과를 하나 이상 선택하세요.';return;}
+  $('#err').textContent='';
+  let words=[];
+  lessons.forEach(L=>DATA[L].forEach(w=>words.push(w)));
+  queue=shuffle(words.slice()); idx=0;
+  $('#menu').style.display='none';
+  $('#quiz').style.display='block';
+  render();
+});
+
+function resolveKanji(w){return (w.kanji && w.kanji!=='-')?w.kanji:w.kana;}
+function fieldValue(w,f){return f==='kanji'?resolveKanji(w):f==='kana'?w.kana:w.kor;}
+
+function showForm(f){
+  const w=queue[idx];
+  $('#v-'+f).textContent=fieldValue(w,f);
+  document.querySelector('.field[data-f="'+f+'"]').classList.add('show');
+  document.querySelector('.rbtn[data-f="'+f+'"]').classList.add('active');
+  shownForms.add(f);
+}
+function hideForm(f){
+  document.querySelector('.field[data-f="'+f+'"]').classList.remove('show');
+  document.querySelector('.rbtn[data-f="'+f+'"]').classList.remove('active');
+  shownForms.delete(f);
+}
+document.querySelectorAll('.rbtn').forEach(b=>{
+  b.addEventListener('click',()=>{const f=b.dataset.f; shownForms.has(f)?hideForm(f):showForm(f);});
+});
+
+function render(){
+  if(idx>=queue.length){queue=shuffle(queue);idx=0;}
+  shownForms=new Set();
+  document.querySelectorAll('.field').forEach(e=>e.classList.remove('show'));
+  document.querySelectorAll('.rbtn').forEach(e=>e.classList.remove('active'));
+  showForm(startForm);
+  $('#counter').textContent=(idx+1)+' / '+queue.length;
+}
+
+$('#nextBtn').addEventListener('click',()=>{idx++;render();});
+$('#homeBtn').addEventListener('click',()=>{$('#quiz').style.display='none';$('#menu').style.display='block';});
+</script>
+</body>
+</html>
